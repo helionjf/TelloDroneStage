@@ -10,6 +10,7 @@ print(me.get_battery())
 global img
 me.streamon()
 
+
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
     speed = 50
@@ -38,6 +39,7 @@ def getKeyboardInput():
         cv2.imwrite(f'Resources/Images/{time.time()}.jpg', img)
         time.sleep(0.3)
     return [lr, fb, ud, yv]
+
 
 while True:
     vals = getKeyboardInput()
