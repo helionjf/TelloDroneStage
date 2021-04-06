@@ -51,9 +51,7 @@ def trackFace(me, info, w, pid, pError):
 
     error = x - w // 2
     speed = (pid[0] * error) + (pid[1] * (error - pError))
-    print("oui", speed)
     speed = int(np.clip(speed, -100, 100))
-    print("non", speed)
     if FbRange[0] < area < FbRange[1]:
        fb = 0
     if area > FbRange[1]:

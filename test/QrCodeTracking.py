@@ -1,37 +1,14 @@
 import cv2
 from pyzbar.pyzbar import decode
 from djitellopy import tello
-from time import sleep
+from demo1 import demo1
+from demo2 import demo2
 
 me = tello.Tello()
 
 me.connect()
 me.streamon()
 me.takeoff()
-
-
-def demo1(me):
-    me.set_speed(60)
-    sleep(1)
-    me.rotate_clockwise(360)
-    sleep(7)
-    me.rotate_counter_clockwise(360)
-    sleep(7)
-    me.move_up(50)
-    sleep(2.2)
-    me.move_down(100)
-    sleep(3.5)
-    me.move_up(50)
-    sleep(2.2)
-    me.flip_right()
-    sleep(4)
-    me.flip_left()
-    sleep(4)
-    me.land()
-    me.streamoff()
-    sleep(2)
-    me.end()
-    exit(1)
 
 
 def detectQrCode(img, me):
@@ -44,6 +21,8 @@ def detectQrCode(img, me):
         barcodeType = barcode.type
         if barcodeData == "demo1":
             demo1(me)
+        elif barcodeData == "demo2":
+            demo2(me)
         text = "{} ({})".format(barcodeData, barcodeType)
         cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
