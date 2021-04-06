@@ -3,6 +3,8 @@ from djitellopy import tello
 import time
 import cv2
 
+# init drone state
+
 kp.init()
 me = tello.Tello()
 me.connect()
@@ -10,6 +12,8 @@ print(me.get_battery())
 global img
 me.streamon()
 
+
+# permet de bouger en fonction de la touche appuyée
 
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
@@ -40,6 +44,8 @@ def getKeyboardInput():
         time.sleep(0.3)
     return [lr, fb, ud, yv]
 
+
+# main loop pour controler le drone au clavier
 
 while True:
     vals = getKeyboardInput()

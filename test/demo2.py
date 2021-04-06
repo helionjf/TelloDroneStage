@@ -1,6 +1,8 @@
 from time import sleep
 
 
+# commande simple si le qrcode demo2 est reconnu
+
 def demo2(me):
     me.set_speed(100)
     me.move_forward(50)

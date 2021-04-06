@@ -4,6 +4,8 @@ from djitellopy import tello
 from pyzbar.pyzbar import decode
 import time
 
+# init drone state
+
 me = tello.Tello()
 me.connect()
 print(me.get_battery())
@@ -20,6 +22,8 @@ FbRange = [6200, 6800]
 pid = [0.4, 0.4, 0]  # PID = proportionnel, integral, derivé
 pError = 0
 
+
+# permet de reconnaitre une cible à partir d'une image
 
 def findFace(img):
     cv2.circle(img, (int(360 / 2), int(240 / 2)), 10, (0, 255, 0))
@@ -44,6 +48,8 @@ def findFace(img):
         return img, [[0, 0], 0]
 
 
+# permet de ce deplacer vers la cible reconnue
+
 def trackFace(me, info, w, pid, pError):
     area = info[1]
     x, y = info[0]
@@ -65,6 +71,8 @@ def trackFace(me, info, w, pid, pError):
     me.send_rc_control(0, fb, 0, speed)
     return error
 
+
+# main loop permettant, à chaque frame, de detecter une cible puis ce deplacer vers elle
 
 while True:
     img = me.get_frame_read().frame
