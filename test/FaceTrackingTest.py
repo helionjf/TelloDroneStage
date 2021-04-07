@@ -27,16 +27,17 @@ pError = 0
 
 def findFace(img):
     cv2.circle(img, (int(360 / 2), int(240 / 2)), 10, (0, 255, 0))
-    det = decode(img)
+    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
 
     myFaceListC = []
     myFaceListArea = []
 
-    for barcode in det:
-        (x, y, w, h) = barcode.rect
+    for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x + w, y + w), (0, 0, 255), 2)
-        cx = x + int(h / 2)
-        cy = y + int(w / 2)
+        cx = x + int(w / 2)
+        cy = y + int(h / 2)
         area = w * h
         cv2.circle(img, (cx, cy), 5, (0, 255, 0), cv2.FILLED)
         myFaceListC.append([cx, cy])
@@ -78,9 +79,9 @@ while True:
     img = me.get_frame_read().frame
     img = cv2.resize(img, (w, h))
     img, info = findFace(img)
-    trackFace(me, info, w, pid, pError)
+    pError = trackFace(me, info, w, pid, pError)
     cv2.putText(img, f'[{info[0][0]}, {info[0][1]}, {info[1]}]', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2, cv2.LINE_AA)
-    cv2.imshow("Facetracking", img)
+    cv2.imshow("Face Tracking", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         me.land()
         me.streamoff()
