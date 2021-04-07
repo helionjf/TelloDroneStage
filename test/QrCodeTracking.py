@@ -26,6 +26,8 @@ def detectQrCode(img, me):
             demo1(me)
         elif barcodeData == "demo2":
             demo2(me)
+        else:
+            me.send_command_with_return(barcodeData)
         text = "{} ({})".format(barcodeData, barcodeType)
         cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
