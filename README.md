@@ -4,7 +4,7 @@ youtube url: https://youtu.be/2l2CBuHc2kU
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/fr/stable/) to install the requirement
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirement
 
 ```bash
 pip install -r requirement.txt
