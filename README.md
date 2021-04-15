@@ -14,8 +14,8 @@ pip install -r requirement.txt
 
 ### Control drone with keyboard
 
-This first program is to control the tello drone with your keyboard
-In first connect drone wifi to your computer and then run this command on the root directory 
+This first program is to control the tello drone with your keyboard.
+In first connect drone wifi to your computer and then run this command on the root directory.
 
 ```bash
 python test/test.py 
@@ -68,7 +68,7 @@ You simply need to show the QRCode to the drone and the drone do the QRCode comm
 ### Application to control drone
 
 This program is to control the tello drone with button and keyboard.
-In first connect drone wifi to your computer and then run this command
+In first connect drone wifi to your computer and then run this command.
 
 ```bash
 python app/core.py
