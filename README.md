@@ -64,3 +64,12 @@ python test/QrCodeTracking.py
 
 This program need QRCode to do something. So go to the test/Ressources/QRCode/ and take one or more QRCode.
 You simply need to show the QRCode to the drone and the drone do the QRCode command.
+
+### Application to control drone
+
+This program is to control the tello drone with button and keyboard.
+In first connect drone wifi to your computer and then run this command
+
+```bash
+python app/core.py
+```
