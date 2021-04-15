@@ -1,0 +1,114 @@
+#:kivy 1.4
+
+<KivyCamera>:
+    FloatLayout:
+        Button:
+            text: "Forward"
+            pos_hint: {'x': 6, 'y': 1.5}
+            size_hint: 1, .5
+            on_press: root.on_move_forward()
+            on_release: root.off_move_forward()
+        Button:
+            text: "Backward"
+            pos_hint: {'x': 6, 'y': .5}
+            size_hint: 1, .5
+            on_press: root.on_move_backward()
+            on_release: root.off_move_backward()
+        Button:
+            text: "Right"
+            pos_hint: {'x': 6.5, 'y': 1}
+            size_hint: 1, .5
+            on_press: root.on_move_right()
+            on_release: root.off_move_right()
+        Button:
+    	    text: 'Left'
+    	    pos_hint: {'x': 5.5, 'y': 1}
+    	    size_hint: 1, .5
+    	    on_press: root.on_move_left()
+            on_release: root.off_move_left()
+    	Button:
+    	    text: 'Up'
+    	    pos_hint: {'x': 1, 'y': 1.5}
+    	    size_hint: 1, .5
+    	    on_press: root.on_move_up()
+            on_release: root.off_move_up()
+    	Button:
+    	    text: 'Down'
+    	    pos_hint: {'x': 1, 'y': .5}
+    	    size_hint: 1, .5
+    	    on_press: root.on_move_down()
+            on_release: root.off_move_down()
+    	Button:
+    	    text: 'Rotate R'
+    	    pos_hint: {'x': 1.5, 'y': 1}
+    	    size_hint: 1, .5
+    	    on_press: root.on_move_rotateR()
+            on_release: root.off_move_rotateR()
+    	Button:
+    	    text: 'Rotate L'
+    	    pos_hint: {'x': .5, 'y': 1}
+    	    size_hint: 1, .5
+    	    on_press: root.on_move_rotateL()
+            on_release: root.off_move_rotateL()
+    	Button:
+    	    text: 'TakeOff'
+    	    pos_hint: {'x': 3, 'y': 0.5}
+    	    size_hint: 1, .5
+    	    on_press: root.takeoff()
+    	Button:
+    	    text: 'Land'
+    	    pos_hint: {'x': 4, 'y': 0.5}
+    	    size_hint: 1, .5
+    	    on_press: root.land()
+    	Label:
+    	    id: battery_label
+    	    text: 'Battery: 0%'
+    	    color: 1, 1, 1, 1
+    	    background_color: .1, .1, .1, 1
+    	    text_size: 400, None
+    	    pos: 165, 530
+    	    canvas.before:
+    	        Color:
+    	            rgba: self.background_color
+    	        Rectangle:
+    	            size: 110, 40
+    	            pos: 0, 560
+    	Label:
+    	    id: temperature_label
+    	    text: 'Temperature: 0°C'
+    	    color: 1, 1, 1, 1
+    	    background_color: .1, .1, .1, 1
+    	    text_size: 400, None
+    	    pos: 275, 530
+    	    canvas.before:
+    	        Color:
+    	            rgba: self.background_color
+    	        Rectangle:
+    	            size: 155, 40
+    	            pos: 120, 560
+    	Label:
+    	    id: barometer_label
+    	    text: 'Altitude: 0cm'
+    	    color: 1, 1, 1, 1
+    	    background_color: .1, .1, .1, 1
+    	    text_size: 400, None
+    	    pos: 440, 530
+    	    canvas.before:
+    	        Color:
+    	            rgba: self.background_color
+    	        Rectangle:
+    	            size: 115, 40
+    	            pos: 285, 560
+    	Label:
+    	    id: time_flight_label
+    	    text: 'Flight Time: 0s'
+    	    color: 1, 1, 1, 1
+    	    background_color: .1, .1, .1, 1
+    	    text_size: 400, None
+    	    pos: 570, 530
+    	    canvas.before:
+    	        Color:
+    	            rgba: self.background_color
+    	        Rectangle:
+    	            size: 135, 40
+    	            pos: 410, 560
