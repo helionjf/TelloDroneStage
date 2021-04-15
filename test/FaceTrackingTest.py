@@ -13,9 +13,6 @@ print(me.get_battery())
 me.streamon()
 time.sleep(2.2)
 me.takeoff()
-time.sleep(2.2)
-me.send_rc_control(0, 0, 25, 0)
-time.sleep(2.2)
 
 w, h = 360, 240
 FbRange = [6200, 6800]
@@ -27,14 +24,16 @@ pError = 0
 
 def findFace(img):
     cv2.circle(img, (int(360 / 2), int(240 / 2)), 10, (0, 255, 0))
-    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
+    # faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    # imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
+    det = decode(img)
 
     myFaceListC = []
     myFaceListArea = []
 
-    for (x, y, w, h) in faces:
+    for barcode in det:
+        (x, y, w, h) = barcode.rect
         cv2.rectangle(img, (x, y), (x + w, y + w), (0, 0, 255), 2)
         cx = x + int(w / 2)
         cy = y + int(h / 2)
@@ -86,4 +85,5 @@ while True:
         me.land()
         me.streamoff()
         me.end()
+        cv2.destroyAllWindows()
         break

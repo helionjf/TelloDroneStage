@@ -44,4 +44,4 @@ while True:
         me.streamoff()
         break
 
-cv2.destroyAllWindow()
+cv2.destroyAllWindows()
