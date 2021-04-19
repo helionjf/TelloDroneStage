@@ -112,3 +112,65 @@
     	        Rectangle:
     	            size: 135, 40
     	            pos: 410, 560
+    	BoxLayout:
+    	    orientation: 'vertical'
+    	    width: 120 if root.dropdown.isShowFlipButton else 0
+    	    hight: 120
+    	    pos: 0, 300
+    	    size_hint: None, 1
+    	    opacity: 1 if root.dropdown.isShowFlipButton else 0
+    	    display: 'inline-block'
+    	    Button:
+    	        text: 'Flip Right'
+    	        on_press: root.flip("r")
+    	    Button:
+    	        text: 'Flip Left'
+    	        on_press: root.flip("l")
+    	    Button:
+    	        text: 'Flip Forward'
+    	        on_press: root.flip("f")
+    	    Button:
+    	        text: 'Flip Backward'
+    	        on_press: root.flip("b")
+
+<CustomDropDown>:
+    Button:
+        text: 'Flip Mod'
+        size_hint_y: None
+        height: 44
+        on_press: root.isShowFlipButton = not root.isShowFlipButton
+    Button:
+        text: 'FaceTracking'
+        size_hint_y: None
+        height: 44
+        on_press: root.isFaceTracking = not root.isFaceTracking
+    Button:
+        text: 'QrCode Action'
+        size_hint_y: None
+        height: 44
+        on_press: root.isQrCodeAction = not root.isQrCodeAction
+    Button:
+        text: 'QrCode Tracking'
+        size_hint_y: None
+        height: 44
+        on_press: root.isQrCodeTracking = not root.isQrCodeTracking
+    Button:
+        text: 'Circle Mod'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'Throw and Fly'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: '360 Mod'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'Rebound Mod'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'Big Angle'
+        size_hint_y: None
+        height: 44
