@@ -132,6 +132,19 @@
     	    Button:
     	        text: 'Flip Backward'
     	        on_press: root.flip("b")
+    	BoxLayout:
+    	    orientation: 'vertical'
+    	    width: 120 if root.dropdown.isCircleMod else 0
+    	    hight: 120
+    	    pos: 650, 300
+    	    size_hint: None, 1
+    	    opacity: 1 if root.dropdown.isCircleMod else 0
+    	    Button:
+    	        text: 'Forward Circle'
+    	        on_press: root.doCircle("avant")
+    	    Button:
+    	        text: 'Backward Circle'
+    	        on_press: root.doCircle("arriere")
 
 <CustomDropDown>:
     Button:
@@ -139,38 +152,48 @@
         size_hint_y: None
         height: 44
         on_press: root.isShowFlipButton = not root.isShowFlipButton
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isShowFlipButton else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'FaceTracking'
         size_hint_y: None
         height: 44
         on_press: root.isFaceTracking = not root.isFaceTracking
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isFaceTracking else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'QrCode Action'
         size_hint_y: None
         height: 44
         on_press: root.isQrCodeAction = not root.isQrCodeAction
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isQrCodeAction else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'QrCode Tracking'
         size_hint_y: None
         height: 44
         on_press: root.isQrCodeTracking = not root.isQrCodeTracking
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isQrCodeTracking else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'Circle Mod'
         size_hint_y: None
         height: 44
-    Button:
-        text: 'Throw and Fly'
-        size_hint_y: None
-        height: 44
+        on_press: root.isCircleMod = not root.isCircleMod
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isCircleMod else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: '360 Mod'
         size_hint_y: None
         height: 44
+        on_press: root.isRoundMod = not root.isRoundMod
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isRoundMod else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'Rebound Mod'
         size_hint_y: None
         height: 44
+        on_press: root.isReboundMod = not root.isReboundMod
+        background_color: (1.0, 0.0, 0.0, 1.0) if root.isReboundMod else (1.0, 1.0, 1.0, 1.0)
     Button:
         text: 'Big Angle'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'Throw and Fly'
         size_hint_y: None
         height: 44

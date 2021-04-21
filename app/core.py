@@ -9,8 +9,10 @@ from kivy.uix.button import Button
 from djitellopy import tello
 from pyzbar.pyzbar import decode
 import numpy as np
+import math
 import cv2
 import threading
+import ffmpeg
 
 
 class CustomDropDown(DropDown):
@@ -18,6 +20,41 @@ class CustomDropDown(DropDown):
     isFaceTracking = BooleanProperty(False)
     isQrCodeAction = BooleanProperty(False)
     isQrCodeTracking = BooleanProperty(False)
+    isCircleMod = BooleanProperty(False)
+    isRoundMod = BooleanProperty(False)
+    isReboundMod = BooleanProperty(False)
+    isBigAngle = BooleanProperty(False)
+
+
+def circle(radius: int, direction: str, rotation: str, inclinaison: int, speed: int,
+           tello):
+    """ Dessine un cercle avec pour point point de départ et d'arrivée la position actuelle
+        :param radius: distance entre le drone et le centre du cercle qu'il va dessiner
+        :param direction: indique s'il part en avant ou en arrières par rapport à son point de départ (avant/arriere)
+        :param rotation: sens de la rotation (cw/ccw)
+        :param inclinaison: inclinaison du cercle en degrès (de -90 à 90) par raport au sol (0 degrès)
+    """
+
+    assert radius > 50, "Le rayon du cercle doit être supérieur à 50 cm"
+    assert -90 <= inclinaison <= 90, "L'inclinaison doit être comprise entre -90 et 90"
+
+    z = math.cos(inclinaison / 90) * radius
+    if inclinaison < 0:
+        z *= -1
+    if direction == 'avant':
+        if rotation == 'cw':
+            tello.curve_xyz_speed(x1=radius, y1=radius, z1=int(z), x2=2 * radius, y2=0, z2=0, speed=speed)
+            tello.curve_xyz_speed(x1=-radius, y1=-radius, z1=int(-z), x2=-2 * radius, y2=0, z2=0, speed=speed)
+        if rotation == 'ccw':
+            tello.curve_xyz_speed(x1=radius, y1=-radius, z1=int(z), x2=2 * radius, y2=0, z2=0, speed=speed)
+            tello.curve_xyz_speed(x1=-radius, y1=radius, z1=int(-z), x2=-2 * radius, y2=0, z2=0, speed=speed)
+    if direction == 'arriere':
+        if rotation == 'cw':
+            tello.curve_xyz_speed(x1=-radius, y1=-radius, z1=int(z), x2=-2 * radius, y2=0, z2=0, speed=speed)
+            tello.curve_xyz_speed(x1=radius, y1=radius, z1=int(-z), x2=2 * radius, y2=0, z2=0, speed=speed)
+        if rotation == 'ccw':
+            tello.curve_xyz_speed(x1=-radius, y1=radius, z1=int(z), x2=-2 * radius, y2=0, z2=0, speed=speed)
+            tello.curve_xyz_speed(x1=radius, y1=-radius, z1=int(-z), x2=2 * radius, y2=0, z2=0, speed=speed)
 
 
 # Kivy Camera permet d'afficher la camera ainsi que de gerer les bouttons
@@ -103,6 +140,14 @@ class KivyCamera(Image):
             self.pError = self.trackFace(self.capture, info, self.width, self.pid, self.pError)
         if self.dropdown.isQrCodeAction:
             self.detectQrCode(frame)
+        if self.dropdown.isRoundMod:
+            h = threading.Thread(name='360', target=self.round)
+            h.start()
+            self.dropdown.isRoundMod = False
+        if self.dropdown.isReboundMod:
+            h = threading.Thread(name='rebound', target=self.rebound)
+            h.start()
+            self.dropdown.isReboundMod = False
         buf1 = cv2.flip(frame, 0)
         buf = buf1.tobytes()
         image_texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
@@ -115,6 +160,21 @@ class KivyCamera(Image):
         if self.dropdown.isFaceTracking is not True or self.dropdown.isQrCodeTracking is not True:
             self.capture.send_rc_control(0, 0, 0, 0)
 
+    def rebound(self):
+        while self.capture.get_height() > 50:
+            self.capture.send_rc_control(0, 0, -50, 0)
+        while self.capture.get_height() < 120:
+            self.capture.send_rc_control(0, 0, 50, 0)
+        while self.capture.get_height() > 80:
+            self.capture.send_rc_control(0, 0, -50, 0)
+
+    def round(self):
+        self.capture.rotate_clockwise(360)
+
+    def doCircle(self, direction):
+        h = threading.Thread(name='circle', target=circle(51, direction, "cw", 0, 50, self.capture))
+        h.start()
+
     def detectQrCode(self, img):
         det = decode(img)
 
@@ -125,6 +185,7 @@ class KivyCamera(Image):
             barcodeType = barcode.type
             if barcodeData is not None:
                 h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
+                h.start()
             text = "{} ({})".format(barcodeData, barcodeType)
             cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
@@ -146,7 +207,6 @@ class KivyCamera(Image):
             self.capture.flip_backwad()
         else:
             pass
-        # self.capture.flip(direction)
 
     def findFace(self, img):
         cv2.circle(img, (int(self.width / 2), int(self.height / 2)), 10, (0, 255, 0))
