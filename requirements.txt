@@ -7,6 +7,7 @@ django-qrcode==0.3
 djitellopy==1.5
 djitellopy2==2.3
 docutils==0.17
+ffmpeg==1.4
 idna==2.10
 image==1.5.33
 Kivy==2.0.0
