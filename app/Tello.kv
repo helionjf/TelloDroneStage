@@ -3,63 +3,74 @@
 <KivyCamera>:
     FloatLayout:
         Button:
-            text: "Forward"
-            pos_hint: {'x': 6, 'y': 1.5}
-            size_hint: 1, .5
+            id: forward
+            pos_hint: {'x': 6.5, 'y': 1.5}
+            size_hint: .5, .5
             on_press: root.on_move_forward()
             on_release: root.off_move_forward()
+            background_normal: 'Resources\img\icons8-collapse-arrow-50.png'
+            background_down: 'Resources\img\icons8-collapse-arrow-50-down.png'
         Button:
-            text: "Backward"
-            pos_hint: {'x': 6, 'y': .5}
-            size_hint: 1, .5
+            pos_hint: {'x': 6.5, 'y': .5}
+            size_hint: .5, .5
             on_press: root.on_move_backward()
             on_release: root.off_move_backward()
+            background_normal: 'Resources\img\icons8-expand-arrow-50.png'
+            background_down: 'Resources\img\icons8-expand-arrow-50-down.png'
         Button:
-            text: "Right"
-            pos_hint: {'x': 6.5, 'y': 1}
-            size_hint: 1, .5
+            pos_hint: {'x': 7, 'y': 1}
+            size_hint: .5, .5
             on_press: root.on_move_right()
             on_release: root.off_move_right()
+            background_normal: 'Resources\img\icons8-forward-50.png'
+            background_down: 'Resources\img\icons8-forward-50-down.png'
         Button:
-    	    text: 'Left'
-    	    pos_hint: {'x': 5.5, 'y': 1}
-    	    size_hint: 1, .5
+    	    pos_hint: {'x': 6, 'y': 1}
+    	    size_hint: .5, .5
     	    on_press: root.on_move_left()
             on_release: root.off_move_left()
+            background_normal: 'Resources\img\icons8-back-50.png'
+            background_down: 'Resources\img\icons8-back-50-down.png'
     	Button:
-    	    text: 'Up'
     	    pos_hint: {'x': 1, 'y': 1.5}
-    	    size_hint: 1, .5
+    	    size_hint: .5, .5
     	    on_press: root.on_move_up()
             on_release: root.off_move_up()
+            background_normal: 'Resources\img\icons8-double-up-50.png'
+            background_down: 'Resources\img\icons8-double-up-50-down.png'
     	Button:
-    	    text: 'Down'
     	    pos_hint: {'x': 1, 'y': .5}
-    	    size_hint: 1, .5
+    	    size_hint: .5, .5
     	    on_press: root.on_move_down()
             on_release: root.off_move_down()
+            background_normal: 'Resources\img\icons8-double-down-50.png'
+            background_down: 'Resources\img\icons8-double-down-50-down.png'
     	Button:
-    	    text: 'Rotate R'
     	    pos_hint: {'x': 1.5, 'y': 1}
-    	    size_hint: 1, .5
+    	    size_hint: .5, .5
     	    on_press: root.on_move_rotateR()
             on_release: root.off_move_rotateR()
+            background_normal: 'Resources\img\icons8-u-turn-to-right-50.png'
+            background_down: 'Resources\img\icons8-u-turn-to-right-50-down.png'
     	Button:
-    	    text: 'Rotate L'
-    	    pos_hint: {'x': .5, 'y': 1}
-    	    size_hint: 1, .5
+    	    pos_hint: {'x': 0.5, 'y': 1}
+    	    size_hint: .5, .5
     	    on_press: root.on_move_rotateL()
             on_release: root.off_move_rotateL()
+            background_normal: 'Resources\img\icons8-u-turn-to-left-50.png'
+            background_down: 'Resources\img\icons8-u-turn-to-left-50-down.png'
     	Button:
-    	    text: 'TakeOff'
-    	    pos_hint: {'x': 3, 'y': 0.5}
-    	    size_hint: 1, .5
+    	    pos_hint: {'x': 3.5, 'y': 0.5}
+    	    size_hint: .5, .5
     	    on_press: root.takeoff()
+    	    background_normal: 'Resources\img\outline_flight_takeoff_black_48dp.png'
+    	    background_down: 'Resources\img\outline_flight_takeoff_black_48dp-down.png'
     	Button:
-    	    text: 'Land'
     	    pos_hint: {'x': 4, 'y': 0.5}
-    	    size_hint: 1, .5
+    	    size_hint: .5, .5
     	    on_press: root.land()
+    	    background_normal: 'Resources\img\outline_flight_land_black_48dp.png'
+    	    background_down: 'Resources\img\outline_flight_land_black_48dp-down.png'
     	Label:
     	    id: battery_label
     	    text: 'Battery: 0%'
@@ -112,10 +123,16 @@
     	        Rectangle:
     	            size: 135, 40
     	            pos: 410, 560
+    	Label:
+    	    id: not_connected
+    	    text: 'Please Connect The Drone Before Running The App'
+    	    color: 1, 0, 0, 1
+    	    text_size: 500, None
+    	    pos: 350, 350
     	BoxLayout:
     	    orientation: 'vertical'
     	    width: 120 if root.dropdown.isShowFlipButton else 0
-    	    hight: 120
+    	    height: 120
     	    pos: 0, 300
     	    size_hint: None, 1
     	    opacity: 1 if root.dropdown.isShowFlipButton else 0
@@ -135,16 +152,45 @@
     	BoxLayout:
     	    orientation: 'vertical'
     	    width: 120 if root.dropdown.isCircleMod else 0
-    	    hight: 120
+    	    height: 200
     	    pos: 650, 300
     	    size_hint: None, 1
     	    opacity: 1 if root.dropdown.isCircleMod else 0
-    	    Button:
-    	        text: 'Forward Circle'
-    	        on_press: root.doCircle("avant")
-    	    Button:
-    	        text: 'Backward Circle'
-    	        on_press: root.doCircle("arriere")
+    	    BoxLayout:
+    	        orientation: 'vertical'
+    	        Button:
+    	            text: 'Forward Circle'
+    	            on_press: root.doCircle("avant", radius.value, inclinaison.value)
+    	    BoxLayout:
+    	        orientation: 'vertical'
+    	        Button:
+    	            text: 'Backward Circle'
+    	            on_press: root.doCircle("arriere", radius.value, inclinaison.value)
+    	    BoxLayout:
+    	        orientation: 'vertical'
+    	        Label:
+    	            text: 'Radius'
+    	        Slider:
+    	            id: radius
+    	            min: 50
+    	            max: 150
+    	            step: 10
+    	            orientation: 'horizontal'
+    	        Label:
+        	        text: str(radius.value)
+        	BoxLayout:
+        	    orientation: 'vertical'
+    	        Label:
+    	            text: 'Inclinaison'
+    	        Slider:
+    	            id: inclinaison
+    	            min: -90
+    	            max: 90
+    	            step: 10
+    	            orientation: 'horizontal'
+    	            value: 0
+    	        Label:
+    	            text:str(inclinaison.value)
 
 <CustomDropDown>:
     Button:
@@ -193,6 +239,7 @@
         text: 'Big Angle'
         size_hint_y: None
         height: 44
+        on_press: root.isBigAngle = not root.isBigAngle
     Button:
         text: 'Throw and Fly'
         size_hint_y: None

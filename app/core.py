@@ -12,7 +12,11 @@ import numpy as np
 import math
 import cv2
 import threading
-import ffmpeg
+import datetime
+from pathlib import Path, PurePath
+from kivy.config import Config
+
+Config.set('graphics', 'resizable', False)
 
 
 class CustomDropDown(DropDown):
@@ -35,7 +39,7 @@ def circle(radius: int, direction: str, rotation: str, inclinaison: int, speed: 
         :param inclinaison: inclinaison du cercle en degrès (de -90 à 90) par raport au sol (0 degrès)
     """
 
-    assert radius > 50, "Le rayon du cercle doit être supérieur à 50 cm"
+    assert radius >= 50, "Le rayon du cercle doit être supérieur à 50 cm"
     assert -90 <= inclinaison <= 90, "L'inclinaison doit être comprise entre -90 et 90"
 
     z = math.cos(inclinaison / 90) * radius
@@ -64,6 +68,7 @@ class KivyCamera(Image):
         self.dropdown = CustomDropDown()
         super(KivyCamera, self).__init__(**kwargs)
         self.capture = capture
+        self.isConnect = True
         self.forward = None
         self.backward = None
         self.left = None
@@ -78,11 +83,20 @@ class KivyCamera(Image):
         self.pError = 0
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down, on_key_up=self._on_keyboard_up)
-        self.mainbutton = Button(text='Menu', size=(150, 50), pos=(650, 550))
-        self.add_widget(self.mainbutton)
-        self.mainbutton.bind(on_release=self.dropdown.open)
+        self.mainButton = Button(text='Menu', size=(150, 50), pos=(650, 550))
+        self.add_widget(self.mainButton)
+        self.mainButton.bind(on_release=self.dropdown.open)
         self.dropdown.bind(on_select=lambda instance, x: setattr(self.mainbutton, 'text', x))
-        Clock.schedule_interval(self.update, 1.0 / fps)
+        try:
+            self.capture.connect()
+        except Exception as e:
+            if str(e) == "Command 'command' was unsuccessful for 2 tries. Latest response:	'Aborting command " \
+                         "'command'. Did not receive a response after 7 seconds'":
+                self.isConnect = False
+        if self.isConnect is True:
+            self.capture.streamon()
+            self.ids.not_connected.color = (0, 0, 0, 0)
+            Clock.schedule_interval(self.update, 1.0 / fps)
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down, on_key_up=self._on_keyboard_up)
@@ -140,14 +154,18 @@ class KivyCamera(Image):
             self.pError = self.trackFace(self.capture, info, self.width, self.pid, self.pError)
         if self.dropdown.isQrCodeAction:
             self.detectQrCode(frame)
-        if self.dropdown.isRoundMod:
+        if self.dropdown.isRoundMod and self.capture.get_flight_time != 0 and self.capture.get_height != 0:
             h = threading.Thread(name='360', target=self.round)
             h.start()
             self.dropdown.isRoundMod = False
-        if self.dropdown.isReboundMod:
+        if self.dropdown.isReboundMod and self.capture.get_flight_time != 0 and self.capture.get_height != 0:
             h = threading.Thread(name='rebound', target=self.rebound)
             h.start()
             self.dropdown.isReboundMod = False
+        if self.dropdown.isBigAngle and self.capture.get_flight_time != 0 and self.capture.get_height != 0:
+            h = threading.Thread(name='BigAngle', target=self.bigAngle)
+            h.start()
+            self.dropdown.isBigAngle = False
         buf1 = cv2.flip(frame, 0)
         buf = buf1.tobytes()
         image_texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
@@ -160,20 +178,42 @@ class KivyCamera(Image):
         if self.dropdown.isFaceTracking is not True or self.dropdown.isQrCodeTracking is not True:
             self.capture.send_rc_control(0, 0, 0, 0)
 
+    def bigAngle(self):
+        ts = datetime.datetime.now()
+        filename = "{}.avi".format(ts.strftime("%Y-%m-%d_%H-%M-%S"))
+        p = Path(__file__).parent
+        p = PurePath(p, 'Resources', 'Videos', filename)
+        p = str(p)
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        video_writer = cv2.VideoWriter(p, fourcc, 45, (960, 720))
+        max_height = self.capture.get_height() + 50
+        while max_height >= self.capture.get_height():
+            self.capture.send_rc_control(0, -50, 50, 0)
+            video_writer.write(self.capture.get_frame_read().frame)
+
     def rebound(self):
-        while self.capture.get_height() > 50:
-            self.capture.send_rc_control(0, 0, -50, 0)
-        while self.capture.get_height() < 120:
-            self.capture.send_rc_control(0, 0, 50, 0)
-        while self.capture.get_height() > 80:
-            self.capture.send_rc_control(0, 0, -50, 0)
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            while self.capture.get_height() > 50:
+                self.capture.send_rc_control(0, 0, -50, 0)
+            while self.capture.get_height() < 120:
+                self.capture.send_rc_control(0, 0, 50, 0)
+            while self.capture.get_height() > 80:
+                self.capture.send_rc_control(0, 0, -50, 0)
 
     def round(self):
-        self.capture.rotate_clockwise(360)
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            self.capture.rotate_clockwise(360)
 
-    def doCircle(self, direction):
-        h = threading.Thread(name='circle', target=circle(51, direction, "cw", 0, 50, self.capture))
-        h.start()
+    def doCircle(self, direction, radius, inclinaison):
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            h = threading.Thread(name='circle', target=circle(radius, direction, "cw", inclinaison, 50, self.capture))
+            h.start()
 
     def detectQrCode(self, img):
         det = decode(img)
@@ -190,11 +230,14 @@ class KivyCamera(Image):
             cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
     def flip(self, direction):
-        if self.flip_thread is not None:
-            self.flip_thread.stop = False
-            self.flip_thread = None
-        self.flip_thread = threading.Thread(name='flip', target=self.threadFlip(direction))
-        self.flip_thread.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.flip_thread is not None:
+                self.flip_thread.stop = False
+                self.flip_thread = None
+            self.flip_thread = threading.Thread(name='flip', target=self.threadFlip(direction))
+            self.flip_thread.start()
 
     def threadFlip(self, direction):
         if direction == "l":
@@ -276,11 +319,14 @@ class KivyCamera(Image):
 
     # Move Forward
     def on_move_forward(self):
-        if self.forward is not None:
-            self.forward.stop = False
-            self.forward = None
-        self.forward = threading.Thread(name='move_forward', target=self.move_forward)
-        self.forward.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.forward is not None:
+                self.forward.stop = False
+                self.forward = None
+            self.forward = threading.Thread(name='move_forward', target=self.move_forward)
+            self.forward.start()
 
     def move_forward(self):
         t = threading.currentThread()
@@ -288,17 +334,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 50, 0, 0)
 
     def off_move_forward(self):
-        if self.forward is not None:
-            self.forward.stop = False
-            self.forward = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.forward is not None:
+                self.forward.stop = False
+                self.forward = None
 
     # Move Backward
     def on_move_backward(self):
-        if self.backward is not None:
-            self.backward.stop = False
-            self.backward = None
-        self.backward = threading.Thread(name='move_backward', target=self.move_backward)
-        self.backward.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.backward is not None:
+                self.backward.stop = False
+                self.backward = None
+            self.backward = threading.Thread(name='move_backward', target=self.move_backward)
+            self.backward.start()
 
     def move_backward(self):
         t = threading.currentThread()
@@ -306,17 +358,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, -50, 0, 0)
 
     def off_move_backward(self):
-        if self.backward is not None:
-            self.backward.stop = False
-            self.backward = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.backward is not None:
+                self.backward.stop = False
+                self.backward = None
 
     # Move Right
     def on_move_right(self):
-        if self.Right is not None:
-            self.Right.stop = False
-            self.Right = None
-        self.Right = threading.Thread(name='move_right', target=self.move_right)
-        self.Right.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.Right is not None:
+                self.Right.stop = False
+                self.Right = None
+            self.Right = threading.Thread(name='move_right', target=self.move_right)
+            self.Right.start()
 
     def move_right(self):
         t = threading.currentThread()
@@ -324,17 +382,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(50, 0, 0, 0)
 
     def off_move_right(self):
-        if self.Right is not None:
-            self.Right.stop = False
-            self.Right = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.Right is not None:
+                self.Right.stop = False
+                self.Right = None
 
     # Move left
     def on_move_left(self):
-        if self.left is not None:
-            self.left.stop = False
-            self.left = None
-        self.left = threading.Thread(name='move_left', target=self.move_left)
-        self.left.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.left is not None:
+                self.left.stop = False
+                self.left = None
+            self.left = threading.Thread(name='move_left', target=self.move_left)
+            self.left.start()
 
     def move_left(self):
         t = threading.currentThread()
@@ -342,17 +406,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(-50, 0, 0, 0)
 
     def off_move_left(self):
-        if self.left is not None:
-            self.left.stop = False
-            self.left = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.left is not None:
+                self.left.stop = False
+                self.left = None
 
     # Move Up
     def on_move_up(self):
-        if self.up is not None:
-            self.up.stop = False
-            self.up = None
-        self.up = threading.Thread(name='move_up', target=self.move_up)
-        self.up.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.up is not None:
+                self.up.stop = False
+                self.up = None
+            self.up = threading.Thread(name='move_up', target=self.move_up)
+            self.up.start()
 
     def move_up(self):
         t = threading.currentThread()
@@ -360,17 +430,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 0, 50, 0)
 
     def off_move_up(self):
-        if self.up is not None:
-            self.up.stop = False
-            self.up = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.up is not None:
+                self.up.stop = False
+                self.up = None
 
     # Move Down
     def on_move_down(self):
-        if self.down is not None:
-            self.down.stop = False
-            self.down = None
-        self.down = threading.Thread(name='move_down', target=self.move_down)
-        self.down.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.down is not None:
+                self.down.stop = False
+                self.down = None
+            self.down = threading.Thread(name='move_down', target=self.move_down)
+            self.down.start()
 
     def move_down(self):
         t = threading.currentThread()
@@ -378,17 +454,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 0, -50, 0)
 
     def off_move_down(self):
-        if self.down is not None:
-            self.down.stop = False
-            self.down = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.down is not None:
+                self.down.stop = False
+                self.down = None
 
     # Rotate Right
     def on_move_rotateR(self):
-        if self.rotateR is not None:
-            self.rotateR.stop = False
-            self.rotateR = None
-        self.rotateR = threading.Thread(name='move_rotateR', target=self.move_rotateR)
-        self.rotateR.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.rotateR is not None:
+                self.rotateR.stop = False
+                self.rotateR = None
+            self.rotateR = threading.Thread(name='move_rotateR', target=self.move_rotateR)
+            self.rotateR.start()
 
     def move_rotateR(self):
         t = threading.currentThread()
@@ -396,17 +478,23 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 0, 0, 50)
 
     def off_move_rotateR(self):
-        if self.rotateR is not None:
-            self.rotateR.stop = False
-            self.rotateR = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.rotateR is not None:
+                self.rotateR.stop = False
+                self.rotateR = None
 
     # Rotate Left
     def on_move_rotateL(self):
-        if self.rotateL is not None:
-            self.rotateL.stop = False
-            self.rotateL = None
-        self.rotateL = threading.Thread(name='move_rotateL', target=self.move_rotateL)
-        self.rotateL.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.rotateL is not None:
+                self.rotateL.stop = False
+                self.rotateL = None
+            self.rotateL = threading.Thread(name='move_rotateL', target=self.move_rotateL)
+            self.rotateL.start()
 
     def move_rotateL(self):
         t = threading.currentThread()
@@ -414,20 +502,29 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 0, 0, -50)
 
     def off_move_rotateL(self):
-        if self.rotateL is not None:
-            self.rotateL.stop = False
-            self.rotateL = None
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            if self.rotateL is not None:
+                self.rotateL.stop = False
+                self.rotateL = None
 
     def takeoff(self):
-        h = threading.Thread(name='takeoff', target=self.takeoffThread)
-        h.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() != 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            h = threading.Thread(name='takeoff', target=self.takeoffThread)
+            h.start()
 
     def takeoffThread(self):
         self.capture.takeoff()
 
     def land(self):
-        h = threading.Thread(name='land', target=self.landThread)
-        h.start()
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            h = threading.Thread(name='land', target=self.landThread)
+            h.start()
 
     def landThread(self):
         self.capture.land()
@@ -440,15 +537,14 @@ class TelloApp(App):
         self.me = tel
 
     def build(self):
-        self.me.connect()
-        self.me.streamon()
         my_camera = KivyCamera(capture=self.me, fps=30)
         return my_camera
 
     def on_stop(self):
-        self.me.streamoff()
+        if self.me.stream_on is True:
+            self.me.streamoff()
 
 
 if __name__ == '__main__':
-    tell = tello.Tello()
+    tell = tello.Tello(retry_count=1)
     TelloApp(tell).run()
