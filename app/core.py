@@ -179,17 +179,20 @@ class KivyCamera(Image):
             self.capture.send_rc_control(0, 0, 0, 0)
 
     def bigAngle(self):
-        ts = datetime.datetime.now()
-        filename = "{}.avi".format(ts.strftime("%Y-%m-%d_%H-%M-%S"))
-        p = Path(__file__).parent
-        p = PurePath(p, 'Resources', 'Videos', filename)
-        p = str(p)
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        video_writer = cv2.VideoWriter(p, fourcc, 45, (960, 720))
-        max_height = self.capture.get_height() + 50
-        while max_height >= self.capture.get_height():
-            self.capture.send_rc_control(0, -50, 50, 0)
-            video_writer.write(self.capture.get_frame_read().frame)
+        if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
+            pass
+        else:
+            ts = datetime.datetime.now()
+            filename = "{}.avi".format(ts.strftime("%Y-%m-%d_%H-%M-%S"))
+            p = Path(__file__).parent
+            p = PurePath(p, 'Resources', 'Videos', filename)
+            p = str(p)
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            video_writer = cv2.VideoWriter(p, fourcc, 45, (960, 720))
+            max_height = self.capture.get_height() + 50
+            while max_height >= self.capture.get_height():
+                self.capture.send_rc_control(0, -50, 50, 0)
+                video_writer.write(self.capture.get_frame_read().frame)
 
     def rebound(self):
         if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:

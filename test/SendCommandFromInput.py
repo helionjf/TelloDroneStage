@@ -6,7 +6,7 @@ me.connect()
 
 while True:
     cmd = input('')
-    me.send_command_with_return(cmd)
+    me.send_command_without_return(cmd)
     if cmd == "end":
         me.land()
         me.end()

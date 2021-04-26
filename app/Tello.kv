@@ -4,7 +4,7 @@
     FloatLayout:
         Button:
             id: forward
-            pos_hint: {'x': 6.5, 'y': 1.5}
+            <pos_hint: {'x': 6.5, 'y': 1.5}>
             size_hint: .5, .5
             on_press: root.on_move_forward()
             on_release: root.off_move_forward()
@@ -240,7 +240,3 @@
         size_hint_y: None
         height: 44
         on_press: root.isBigAngle = not root.isBigAngle
-    Button:
-        text: 'Throw and Fly'
-        size_hint_y: None
-        height: 44
