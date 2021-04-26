@@ -1,0 +1,109 @@
+#:kivy 1.4
+
+FloatLayout:
+    size: 300, 300
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: 510, 300
+            size: 250, 250
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: 480, 280
+            size: 10, 280
+    TextInput:
+        text: "Salut"
+        size_hint: .18, .05
+        pos: 150, 450
+    Label:
+        text: "QRCode Generator for Tello edu"
+        font_size: 40
+        pos: 10, 280
+    Label:
+        text: "Select Command:"
+        font_size: 20
+        pos: 0, -30
+    Button:
+        text: "Move Forward"
+        size_hint: .18, .1
+        pos: 40, 10
+    Button:
+        text: "Move Backward"
+        size_hint: .18, .1
+        pos: 40, 70
+    Button:
+        text: "Move Left"
+        size_hint: .18, .1
+        pos: 40, 130
+    Button:
+        text: "Move Right"
+        size_hint: .18, .1
+        pos: 40, 190
+    Button:
+        text: "Move up"
+        size_hint: .18, .1
+        pos: 184, 10
+    Button:
+        text: "Move Down"
+        size_hint: .18, .1
+        pos: 184, 70
+    Button:
+        text: "Rotate Clockwise"
+        size_hint: .18, .1
+        pos: 184, 130
+    Button:
+        text: "Rotate Counter Clockwise"
+        font_size: 10
+        size_hint: .18, .1
+        pos: 184, 190
+    Button:
+        text: "Land"
+        size_hint: .18, .1
+        pos: 328, 10
+    Button:
+        text: "TakeOff"
+        size_hint: .18, .1
+        pos: 328, 70
+    Button:
+        text: "Flip"
+        size_hint: .18, .1
+        pos: 328, 130
+    Button:
+        text: "FaceTracking"
+        size_hint: .18, .1
+        pos: 328, 190
+    Button:
+        text: "QRcode Tracking"
+        size_hint: .18, .1
+        pos: 472, 10
+    Button:
+        text: "QRCode Action"
+        size_hint: .18, .1
+        pos: 472, 70
+    Button:
+        text: "Circle Mod"
+        size_hint: .18, .1
+        pos: 472, 130
+    Button:
+        text: "360 Mod"
+        size_hint: .18, .1
+        pos: 472, 190
+    Button:
+        text: "Rebound Mod"
+        size_hint: .18, .1
+        pos: 616, 10
+    Button:
+        text: "big Angle"
+        size_hint: .18, .1
+        pos: 616, 70
+    Button:
+        text: "Take Screenshot"
+        size_hint: .18, .1
+        pos: 616, 130
+    Button:
+        text: "Take Video"
+        size_hint: .18, .1
+        pos: 616, 190
