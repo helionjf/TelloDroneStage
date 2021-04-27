@@ -1,3 +1,7 @@
+from kivy import Config
+Config.set('graphics', 'resizable', '0')
+Config.set('graphics', 'width', '800')
+Config.set('graphics', 'height', '600')
 from kivy.app import App
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
@@ -14,9 +18,6 @@ import cv2
 import threading
 import datetime
 from pathlib import Path, PurePath
-from kivy.config import Config
-
-Config.set('graphics', 'resizable', False)
 
 
 class CustomDropDown(DropDown):
@@ -64,6 +65,8 @@ def circle(radius: int, direction: str, rotation: str, inclinaison: int, speed: 
 # Kivy Camera permet d'afficher la camera ainsi que de gerer les bouttons
 class KivyCamera(Image):
 
+    isConnect: bool
+
     def __init__(self, capture, fps, **kwargs):
         self.dropdown = CustomDropDown()
         super(KivyCamera, self).__init__(**kwargs)
@@ -78,6 +81,7 @@ class KivyCamera(Image):
         self.rotateR = None
         self.rotateL = None
         self.flip_thread = None
+        self.frame = None
         self.FbRange = [6200, 6800]
         self.pid = [0.4, 0.4, 0]
         self.pError = 0
@@ -145,15 +149,15 @@ class KivyCamera(Image):
         return True
 
     def update(self, dt):
-        frame = self.capture.get_frame_read().frame
+        self.frame = self.capture.get_frame_read().frame
         if self.dropdown.isFaceTracking:
-            frame, info = self.findFace(frame)
+            self.frame, info = self.findFace(self.frame)
             self.pError = self.trackFace(self.capture, info, self.width, self.pid, self.pError)
         if self.dropdown.isQrCodeTracking:
-            frame, info = self.findQrCode(frame)
+            self.frame, info = self.findQrCode(self.frame)
             self.pError = self.trackFace(self.capture, info, self.width, self.pid, self.pError)
         if self.dropdown.isQrCodeAction:
-            self.detectQrCode(frame)
+            self.detectQrCode(self.frame)
         if self.dropdown.isRoundMod and self.capture.get_flight_time != 0 and self.capture.get_height != 0:
             h = threading.Thread(name='360', target=self.round)
             h.start()
@@ -166,9 +170,9 @@ class KivyCamera(Image):
             h = threading.Thread(name='BigAngle', target=self.bigAngle)
             h.start()
             self.dropdown.isBigAngle = False
-        buf1 = cv2.flip(frame, 0)
+        buf1 = cv2.flip(self.frame, 0)
         buf = buf1.tobytes()
-        image_texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
+        image_texture = Texture.create(size=(self.frame.shape[1], self.frame.shape[0]), colorfmt='bgr')
         image_texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
         self.texture = image_texture
         self.ids.battery_label.text = "Battery: " + str(self.capture.get_battery()) + "%"
@@ -226,7 +230,19 @@ class KivyCamera(Image):
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
             barcodeData = barcode.data.decode("utf-8")
             barcodeType = barcode.type
-            if barcodeData is not None:
+            if barcodeData == "facetracking":
+                self.dropdown.isFaceTracking = True
+            elif barcodeData == "QrcodeTracking":
+                self.dropdown.isQrCodeTracking = True
+            elif barcodeData == "QrcodeAction":
+                self.dropdown.isQrCodeAction = not self.dropdown.isQrCodeAction
+            elif barcodeData == "bigAngle":
+                self.dropdown.isBigAngle = True
+            elif barcodeData == "360Mod":
+                self.dropdown.isRoundMod = True
+            elif barcodeData == "Rebound":
+                self.dropdown.isReboundMod = True
+            elif barcodeData is not None:
                 h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
                 h.start()
             text = "{} ({})".format(barcodeData, barcodeType)
@@ -513,7 +529,7 @@ class KivyCamera(Image):
                 self.rotateL = None
 
     def takeoff(self):
-        if self.capture.stream_on is False or self.capture.get_flight_time() != 0 and self.capture.get_height() == 0:
+        if self.capture.stream_on is False or self.capture.get_height() != 0:
             pass
         else:
             h = threading.Thread(name='takeoff', target=self.takeoffThread)
