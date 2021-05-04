@@ -3,7 +3,6 @@ Config.set('graphics', 'resizable', '0')
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.uix.widget import Widget
 import qrcode
 
@@ -182,17 +181,17 @@ class Event(Widget):
             tmp = self.ids.inputText.text.split()
             if tmp[0].isdecimal() is False and int(tmp[0]) < 49:
                 self.ids.error.text = "Please enter only number for radius and greater or equal than 50"
-            elif tmp[1] != "avant" or tmp[1] != "arriere":
-                self.ids.error.text = "Please enter only 'avant' or 'arriere' for direction"
-            elif tmp[2] != "cw" or tmp[2] != "ccw":
+            elif tmp[2] != "cw" and tmp[2] != "ccw":
                 self.ids.error.text = "Please enter only 'cw' or 'ccw' for rotation"
             elif -91 > int(tmp[3]) or int(tmp[3]) > 91:
                 self.ids.error.text = "Please enter only number for tilt between -90 and 90"
-            else:
-                img = qrcode.make('circle ' + tmp[0] + " " + tmp[1] + " " + tmp[2] + "" + tmp[3])
+            elif tmp[1] == "avant" or tmp[1] == "arriere":
+                img = qrcode.make('circle ' + tmp[0] + " " + tmp[1] + " " + tmp[2] + " " + tmp[3])
                 img.save("QRCodeImg/circle-" + tmp[0] + "-" + tmp[1] + "-" + tmp[2] + "-" + tmp[3] + ".png")
                 self.ids.qrImage.source = "QRCodeImg/circle-" + tmp[0] + "-" + tmp[1] + "-" + tmp[2] + "-" + tmp[3] + ".png"
                 self.ids.error.text = ""
+            else:
+                self.ids.error.text = "Please enter only 'avant' or 'arriere' for direction"
 
 
 class QRCodeApp(App):
@@ -202,5 +201,4 @@ class QRCodeApp(App):
 
 
 if __name__ == '__main__':
-    GUI = Builder.load_file("QRCode.kv")
     QRCodeApp().run()
