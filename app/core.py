@@ -231,6 +231,7 @@ class KivyCamera(Image):
             barcodeData = barcode.data.decode("utf-8")
             barcodeType = barcode.type
             tmp = barcodeData.split()
+            print(tmp)
             if barcodeData == "facetracking":
                 self.dropdown.isFaceTracking = True
             elif barcodeData == "QrcodeTracking":
@@ -244,7 +245,7 @@ class KivyCamera(Image):
             elif barcodeData == "Rebound":
                 self.dropdown.isReboundMod = True
             elif tmp[0] == "circle":
-                h = threading.Thread(name='circle', target=circle(tmp[1], tmp[2], tmp[3], tmp[4], 50, self.capture))
+                h = threading.Thread(name='circle', target=circle(int(tmp[1]), tmp[2], tmp[3], int(tmp[4]), 50, self.capture))
                 h.start()
             elif barcodeData is not None:
                 h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
