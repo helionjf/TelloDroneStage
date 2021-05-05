@@ -2,12 +2,6 @@
 #:import utils kivy.utils
 
 <Event>:
-    canvas.before:
-        Color:
-            rgba: utils.get_color_from_hex('#FF7900')
-        Rectangle:
-            pos: self.pos
-            size: self.size
     FloatLayout:
         canvas.before:
             Color:
@@ -26,7 +20,7 @@
             on_press: root.takeOff()
         Button:
             text: "Land"
-            pos: 100, 560
+            pos: 110, 560
             size_hint: .7, .3
             on_press: root.land()
     FloatLayout:
@@ -46,87 +40,93 @@
             text: "Drone 1"
             pos: 40, 475
             font_size: 20
+        Label:
+            id: battery_drone1
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 1 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 40, 455
         Button:
             text: "Left" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 475
+            pos: 10.5, 465
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(0)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 475
+            pos: 88, 465
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(0)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 440
+            pos: 10.5, 430
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(0)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 440
+            pos: 88, 430
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(0)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 405
+            pos: 10.5, 395
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(0)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 405
+            pos: 88, 395
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(0)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 370
+            pos: 10.5, 360
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(0)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 370
+            pos: 88, 360
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(0)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 335
+            pos: 10.5, 325
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(0)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 335
+            pos: 88, 325
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(0)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 10.5, 300
+            pos: 10.5, 290
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(0)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone1 else ""
             size_hint: .7, .3
-            pos: 88, 300
+            pos: 88, 290
             background_color: (1, 1, 1, 1) if root.isDrone1 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(0)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -147,87 +147,93 @@
             text: "Drone 2"
             pos: 212.5, 475
             font_size: 20
+        Label:
+            id: battery_drone2
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 2 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 212.5, 455
         Button:
             text: "Left" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 475
+            pos: 187.5, 465
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(1)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 475
+            pos: 265, 465
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(1)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 440
+            pos: 187.5, 430
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(1)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 440
+            pos: 265, 430
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(1)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 405
+            pos: 187.5, 395
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(1)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 405
+            pos: 265, 395
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(1)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 370
+            pos: 187.5, 360
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(1)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 370
+            pos: 265, 360
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(1)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 335
+            pos: 187.5, 325
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(1)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 335
+            pos: 265, 325
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(1)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 187.5, 300
+            pos: 187.5, 290
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(1)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone2 else ""
             size_hint: .7, .3
-            pos: 265, 300
+            pos: 265, 290
             background_color: (1, 1, 1, 1) if root.isDrone2 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(1)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -248,87 +254,93 @@
             text: "Drone 3"
             pos: 385, 475
             font_size: 20
+        Label:
+            id: battery_drone3
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 3 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 385, 455
         Button:
             text: "Left" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 475
+            pos: 362.5, 465
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(2)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 475
+            pos: 440, 465
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(2)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 440
+            pos: 362.5, 430
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(2)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 440
+            pos: 440, 430
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(2)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 405
+            pos: 362.5, 395
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(2)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 405
+            pos: 440, 395
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(2)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 370
+            pos: 362.5, 360
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(2)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 370
+            pos: 440, 360
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(2)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 335
+            pos: 362.5, 325
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(2)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 335
+            pos: 440, 325
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(2)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 362.5, 300
+            pos: 362.5, 290
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(2)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone3 else ""
             size_hint: .7, .3
-            pos: 440, 300
+            pos: 440, 290
             background_color: (1, 1, 1, 1) if root.isDrone3 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(2)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -349,87 +361,93 @@
             text: "Drone 4"
             pos: 557.5, 475
             font_size: 20
+        Label:
+            id: battery_drone4
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 4 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 557.5, 455
         Button:
             text: "Left" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 475
+            pos: 535, 465
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(3)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 475
+            pos: 612.5, 465
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(3)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 440
+            pos: 535, 430
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(3)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 440
+            pos: 612.5, 430
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(3)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 405
+            pos: 535, 395
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(3)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 405
+            pos: 612.5, 395
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(3)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 370
+            pos: 535, 360
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(3)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 370
+            pos: 612.5, 360
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(3)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 335
+            pos: 535, 325
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(3)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 335
+            pos: 612.5, 325
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(3)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 535, 300
+            pos: 535, 290
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(3)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone4 else ""
             size_hint: .7, .3
-            pos: 612.5, 300
+            pos: 612.5, 290
             background_color: (1, 1, 1, 1) if root.isDrone4 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(3)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -450,87 +468,93 @@
             text: "Drone 5"
             pos: 40, 210
             font_size: 20
+        Label:
+            id: battery_drone5
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 5 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 40, 190
         Button:
             text: "Left" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 210
+            pos: 10.5, 200
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(4)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 210
+            pos: 88, 200
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(4)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 175
+            pos: 10.5, 165
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(4)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 175
+            pos: 88, 165
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(4)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 140
+            pos: 10.5, 130
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(4)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 140
+            pos: 88, 130
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(4)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 105
+            pos: 10.5, 95
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(4)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 105
+            pos: 88, 95
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(4)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 70
+            pos: 10.5, 60
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(4)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 70
+            pos: 88, 60
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(4)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 10.5, 35
+            pos: 10.5, 25
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(4)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone5 else ""
             size_hint: .7, .3
-            pos: 88, 35
+            pos: 88, 25
             background_color: (1, 1, 1, 1) if root.isDrone5 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(4)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -551,87 +575,93 @@
             text: "Drone 6"
             pos: 212.5, 210
             font_size: 20
+        Label:
+            id: battery_drone6
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 6 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 212.5, 190
         Button:
             text: "Left" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 210
+            pos: 187.5, 200
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(5)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 210
+            pos: 265, 200
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(5)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 175
+            pos: 187.5, 165
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(5)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 175
+            pos: 265, 165
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(5)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 140
+            pos: 187.5, 130
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(5)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 140
+            pos: 265, 130
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(5)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 105
+            pos: 187.5, 95
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(5)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 105
+            pos: 265, 95
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(5)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 70
+            pos: 187.5, 60
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(5)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 70
+            pos: 265, 60
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(5)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 187.5, 35
+            pos: 187.5, 25
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(5)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone6 else ""
             size_hint: .7, .3
-            pos: 265, 35
+            pos: 265, 25
             background_color: (1, 1, 1, 1) if root.isDrone6 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(5)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -652,87 +682,93 @@
             text: "Drone 7"
             pos: 385, 210
             font_size: 20
+        Label:
+            id: battery_drone7
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 7 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 385, 195
         Button:
             text: "Left" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 210
+            pos: 362.5, 200
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(6)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 210
+            pos: 440, 200
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(6)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 175
+            pos: 362.5, 165
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(6)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 175
+            pos: 440, 165
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(6)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 140
+            pos: 362.5, 130
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(6)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 140
+            pos: 440, 130
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(6)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 105
+            pos: 362.5, 95
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(6)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 105
+            pos: 440, 95
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(6)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 70
+            pos: 362.5, 60
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(6)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 70
+            pos: 440, 60
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(6)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 362.5, 35
+            pos: 362.5, 25
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(6)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone7 else ""
             size_hint: .7, .3
-            pos: 440, 35
+            pos: 440, 25
             background_color: (1, 1, 1, 1) if root.isDrone7 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(6)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -747,87 +783,93 @@
             text: "Drone 8"
             pos: 557.5, 210
             font_size: 20
+        Label:
+            id: battery_drone8
+            text: "Battery: 0%"
+            color: (1, 1, 1, 1) if root.nbIp == 8 else (1, 1, 1, 0)
+            font_size: 15
+            pos: 557.5, 195
         Button:
             text: "Left" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 210
+            pos: 535, 200
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveLeftOneDrone(7)
             on_release: root.moveLeftOneDroneUp()
         Button:
             text: "Right" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 210
+            pos: 612.5, 200
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveRightOneDrone(7)
             on_release: root.moveRightOneDroneUp()
         Button:
             text: "Forward" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 175
+            pos: 535, 165
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveForwardOneDrone(7)
             on_release: root.moveForwardOneDroneUp()
         Button:
             text: "Backward" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 175
+            pos: 612.5, 165
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveBackwardOneDrone(7)
             on_release: root.moveBackwardOneDroneUp()
         Button:
             text: "Up" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 140
+            pos: 535, 130
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveUpOneDrone(7)
             on_release: root.moveUpOneDroneUp()
         Button:
             text: "Down" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 140
+            pos: 612.5, 130
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveDownOneDrone(7)
             on_release: root.moveDownOneDroneUp()
         Button:
             text: "Rotate L" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 105
+            pos: 535, 95
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveRotateLeftOneDrone(7)
             on_release: root.moveRotateLeftOneDroneUp()
         Button:
             text: "Rotate R" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 105
+            pos: 612.5, 95
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveRotateRightOneDrone(7)
             on_release: root.moveRotateRightOneDroneUp()
         Button:
             text: "Flip R" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 70
+            pos: 535, 60
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveFlipRightOneDrone(7)
             on_release: root.moveFlipRightOneDroneUp()
         Button:
             text: "Flip L" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 70
+            pos: 612.5, 60
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveFlipLeftOneDrone(7)
             on_release: root.moveFlipLeftOneDroneUp()
         Button:
             text: "Flip F" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 535, 35
+            pos: 535, 25
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveFlipForwardOneDrone(7)
             on_release: root.moveFlipForwardOneDroneUp()
         Button:
             text: "Flip B" if root.isDrone8 else ""
             size_hint: .7, .3
-            pos: 612.5, 35
+            pos: 612.5, 25
             background_color: (1, 1, 1, 1) if root.isDrone8 else (1, 1, 1, 0)
             on_press: root.moveFlipBackwardOneDrone(7)
             on_release: root.moveFlipBackwardOneDroneUp()
@@ -853,58 +895,82 @@
             pos: 705, 445
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveRightAllDrone()
+            on_release: root.moveRightAllDroneUp()
         Button:
             text: "Move Left"
             pos: 705, 408
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveLeftAllDrone()
+            on_release: root.moveLeftAllDroneUp()
         Button:
             text: "Move Back"
             pos: 705, 371
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveBackwardAllDrone()
+            on_release: root.moveBackwardAllDroneUp()
         Button:
             text: "Move Forward"
             pos: 705, 334
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveForwardAllDrone()
+            on_release: root.moveForwardAllDroneUp()
         Button:
             text: "Move Up"
             pos: 705, 297
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveUpAllDrone()
+            on_release: root.moveUpAllDroneUp()
         Button:
             text: "Move Down"
             pos: 705, 260
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveDownAllDrone()
+            on_release: root.moveDownAllDroneUp()
         Button:
             text: "Rotate Right"
             pos: 705, 223
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveRotateRightAllDrone()
+            on_release: root.moveRotateRightAllDroneUp()
         Button:
             text: "Rotate Left"
             pos: 705, 186
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveRotateLeftAllDrone()
+            on_release: root.moveRotateLeftAllDroneUp()
         Button:
             text: "Flip right"
             pos: 705, 149
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveFlipRightAllDrone()
+            on_release: root.moveFlipRightAllDroneUp()
         Button:
             text: "Flip Left"
             pos: 705, 112
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveFlipLeftAllDrone()
+            on_release: root.moveFlipLeftAllDroneUp()
         Button:
             text: "flip Forward"
             pos: 705, 75
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveFlipForwardAllDrone()
+            on_release: root.moveFlipForwardAllDroneUp()
         Button:
             text: "Flip Back"
             pos: 705, 38
             size_hint: .9, .3
             font_size: 12
+            on_press: root.moveFlipBackwardAllDrone()
+            on_release: root.moveFlipBackwardAllDroneUp()
