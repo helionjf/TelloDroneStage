@@ -112,7 +112,7 @@ TODO
 
 ## Usage
 
-###Control App Usage
+### Control App Usage
 
 This first application will allow you to control a tello edu drone by wifi connection. At first you will have to connect the drone by wifi to your computer, then you can launch the following command in a terminal at the root of the project.
 
@@ -120,8 +120,8 @@ This first application will allow you to control a tello edu drone by wifi conne
 python app/core.py
 ```
 Once done, you should see several buttons appear on the page. Here is a small explanation of each button:
-<br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left"> This button allows you to move to the left
-<br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right"> This button allows you to move to the right
+<br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left" align="center"> This button allows you to move to the left
+<br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right" align="center"> This button allows you to move to the right
 
 
 
