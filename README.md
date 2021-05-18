@@ -120,17 +120,18 @@ This first application will allow you to control a tello edu drone by wifi conne
 python app/core.py
 ```
 Once done, you should see several buttons appear on the page. Here is a small explanation of each button:
-<br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left" align="center"> This button allows you to move to the left
-<br/><br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right" align="center"> This button allows you to move to the right
-<br/><br/><img src="app/Resources/img/icons8-expand-arrow-50.png" alt="Move Backward" align="center"> This button allows you to move to the backward
-<br/><br/><img src="app/Resources/img/icons8-collapse-arrow-50.png" alt="Move Forward" align="center"> This button allows you to move to the forward
-<br/><br/><img src="app/Resources/img/icons8-double-up-50.png" alt="Move Up" align="center"> This button allows you to move to the Up
-<br/><br/><img src="app/Resources/img/icons8-double-down-50.png" alt="Move Down" align="center"> This button allows you to move to the Down
-<br/><br/><img src="app/Resources/img/icons8-u-turn-to-left-50.png" alt="Rotate Left" align="center"> This button allows you to rotate to the left
-<br/><br/><img src="app/Resources/img/icons8-u-turn-to-right-50.png" alt="Rotate Right" align="center"> This button allows you to rotate to the right
-<br/><br/><img src="app/Resources/img/outline_flight_takeoff_black_48dp.png" alt="Takeoff" align="center"> This button allows you to takeoff
-<br/><br/><img src="app/Resources/img/outline_flight_land_black_48dp.png" alt="Land" align="center"> This button allows you to land
-
+<p align="center">
+    <br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left" align="center"> This button allows you to move to the left
+    <br/><br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right" align="center"> This button allows you to move to the right
+    <br/><br/><img src="app/Resources/img/icons8-expand-arrow-50.png" alt="Move Backward" align="center"> This button allows you to move to the backward
+    <br/><br/><img src="app/Resources/img/icons8-collapse-arrow-50.png" alt="Move Forward" align="center"> This button allows you to move to the forward
+    <br/><br/><img src="app/Resources/img/icons8-double-up-50.png" alt="Move Up" align="center"> This button allows you to move to the Up
+    <br/><br/><img src="app/Resources/img/icons8-double-down-50.png" alt="Move Down" align="center"> This button allows you to move to the Down
+    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-left-50.png" alt="Rotate Left" align="center"> This button allows you to rotate to the left
+    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-right-50.png" alt="Rotate Right" align="center"> This button allows you to rotate to the right
+    <br/><br/><img src="app/Resources/img/outline_flight_takeoff_black_48dp.png" alt="Takeoff" align="center"> This button allows you to takeoff
+    <br/><br/><img src="app/Resources/img/outline_flight_land_black_48dp.png" alt="Land" align="center"> This button allows you to land
+<p/>
 
 
 <!--
