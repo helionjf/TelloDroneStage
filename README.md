@@ -44,7 +44,7 @@
                 <li><a href="#app-usage">Control App Usage</a></li>
                 <li><a href="#qrcode-app-usage">QRCode App Usage</a></li>
                 <li><a href="#swarm-app-usage">Swarm App Usage</a></li>
-                <li><a href="#test-usage">All Test Usage</a></li>
+                <li><a href="#all-test-usage">All Test Usage</a></li>
             </ul>
         </li>
     </ol>
