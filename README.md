@@ -120,20 +120,27 @@ This first application will allow you to control a tello edu drone by wifi conne
 python app/core.py
 ```
 Once done, you should see several buttons appear on the page. Here is a small explanation of each button:
-<p align="center">
-    <br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left" align="center"> This button allows you to move to the left
-    <br/><br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right" align="center"> This button allows you to move to the right
-    <br/><br/><img src="app/Resources/img/icons8-expand-arrow-50.png" alt="Move Backward" align="center"> This button allows you to move to the backward
-    <br/><br/><img src="app/Resources/img/icons8-collapse-arrow-50.png" alt="Move Forward" align="center"> This button allows you to move to the forward
-    <br/><br/><img src="app/Resources/img/icons8-double-up-50.png" alt="Move Up" align="center"> This button allows you to move to the Up
-    <br/><br/><img src="app/Resources/img/icons8-double-down-50.png" alt="Move Down" align="center"> This button allows you to move to the Down
-    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-left-50.png" alt="Rotate Left" align="center"> This button allows you to rotate to the left
-    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-right-50.png" alt="Rotate Right" align="center"> This button allows you to rotate to the right
-    <br/><br/><img src="app/Resources/img/outline_flight_takeoff_black_48dp.png" alt="Takeoff" align="center"> This button allows you to takeoff
-    <br/><br/><img src="app/Resources/img/outline_flight_land_black_48dp.png" alt="Land" align="center"> This button allows you to land
-<p/>
-
-
+<p align="left">
+    <br/><img src="app/Resources/img/icons8-back-50.png" alt="Move Left" align="center"> This button allows you to move to the left.
+    <br/><br/><img src="app/Resources/img/icons8-forward-50.png" alt="Move Right" align="center"> This button allows you to move to the right.
+    <br/><br/><img src="app/Resources/img/icons8-expand-arrow-50.png" alt="Move Backward" align="center"> This button allows you to move to the backward.
+    <br/><br/><img src="app/Resources/img/icons8-collapse-arrow-50.png" alt="Move Forward" align="center"> This button allows you to move to the forward.
+    <br/><br/><img src="app/Resources/img/icons8-double-up-50.png" alt="Move Up" align="center"> This button allows you to move to the Up.
+    <br/><br/><img src="app/Resources/img/icons8-double-down-50.png" alt="Move Down" align="center"> This button allows you to move to the Down.
+    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-left-50.png" alt="Rotate Left" align="center"> This button allows you to rotate to the left.
+    <br/><br/><img src="app/Resources/img/icons8-u-turn-to-right-50.png" alt="Rotate Right" align="center"> This button allows you to rotate to the right.
+    <br/><br/><img src="app/Resources/img/outline_flight_takeoff_black_48dp.png" alt="Takeoff" align="center"> This button allows you to takeoff.
+    <br/><br/><img src="app/Resources/img/outline_flight_land_black_48dp.png" alt="Land" align="center"> This button allows you to land.
+    <h3>Menu Option :</h3>
+    <br/><img src="images/FlipMod.png" alt="Flip Mod" align="center">the flip button displays 4 buttons that will allow you to perform flips in 4 directions.
+    <br/><br/><img src="images/FaceTracking.png" alt="Face Tracking" align="center">This button will give the indication to the drone to detect a face and then follow it until the button is deactivated.
+    <br/><br/><img src="images/QRCodeAction.png" alt="QRCode Action" align="center">This button will allow you to read the commands you want to execute to the drone via QRCodes. To generate QRCodes please refer to the <a href="#QRCode-App-Usage">QRCode</a> app.
+    <br/><br/><img src="images/QRCodeTracking.png" alt="QRCode Tracking" align="center">This button will give the order to the drone to follow as long as it can any QRCode in front of it until deactivation.
+    <br/><br/><img src="images/CircleMod.png" alt="Circle Mod" align="center">This button will give you access to different settings in order to give the order to the drone to make a circle. (Warning to the size of the circle in small pieces)
+    <br/><br/><img src="images/360Mod.png" alt="360 Mod" align="center">This button will allow you to perform a 360 degree rotation on itself.
+    <br/><br/><img src="images/ReboundMod.png" alt="Rebound Mod" align="center">Automatically ascends and descends 0.5 to 1.2m from a flat surface located under the drone.
+    <br/><br/><img src="images/BigAngle.png" alt="Big Angle Mod" align="center">Record a short video while flying back and up.
+</p>
 <!--
 ### Control drone with keyboard
 
