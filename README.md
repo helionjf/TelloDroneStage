@@ -141,6 +141,37 @@ Once done, you should see several buttons appear on the page. Here is a small ex
     <br/><br/><img src="images/ReboundMod.png" alt="Rebound Mod" align="center">Automatically ascends and descends 0.5 to 1.2m from a flat surface located under the drone.
     <br/><br/><img src="images/BigAngle.png" alt="Big Angle Mod" align="center">Record a short video while flying back and up.
 </p>
+
+### QRCode App Usage
+
+This second application will allow you to generate QR Codes understandable by the drone. You just need to run the following command at the root of the project to launch the app.
+```Bash
+python QRCodeApp/QRCodeCore.py
+```
+All the commands as well as how to complete them are indicated directly in the app.
+Once generated, the QR Codes are saved in the QRCodeApp / QRCodeImg folder
+
+### Swarm App Usage
+
+This third application will allow you to fly several drones at the same time thanks to a proxy. Before launching the application you will need to put your drones in ssid mode. For that you will have to execute the following commands:
+
+1. Connect your Tello edu drone to your computer
+
+2. After run the [SendCommandFromInput](#send-command-from-input) files :
+```Bash
+python test/SendCommandFromInput.py
+```
+3. Once done send this command to the drone :
+```Bash
+ap YourProxyName YourProxyPassword
+```
+After that the drone should restart to connect to your proxy. Repeat this action the number of times you have drones.<br/> Finally, you can run the following command to launch the application:
+```Bash
+python SwarmApp/SwarmCore.py
+```
+
+### All Test Usage
+
 <!--
 ### Control drone with keyboard
 
