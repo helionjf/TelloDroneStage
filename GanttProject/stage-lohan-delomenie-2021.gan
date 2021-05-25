@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Stage-Lohan-Delomenie-2021" company="" webLink="http://" view-date="2021-05-28" view-index="0" gantt-divider-location="534" resource-divider-location="300" version="3.0.3005" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Stage-Lohan-Delomenie-2021" company="" webLink="http://" view-date="2021-05-17" view-index="0" gantt-divider-location="534" resource-divider-location="300" version="3.1.3100" locale="fr_FR">
     <description>
         <![CDATA[Diagramme de gantt pour le stage de Lohan Delomenie du 29/03/2021 au 03/09/2021]]>
     </description>
-    <view zooming-state="default:2" id="gantt-chart">
+    <view zooming-state="default:5" id="gantt-chart">
         <field id="tpd3" name="Nom" width="394" order="0"/>
         <field id="tpd4" name="Date de début" width="68" order="1"/>
         <field id="tpd5" name="Date de fin" width="68" order="2"/>
@@ -173,9 +173,9 @@
         <task id="54" name="Amélorer la détection de drone à partir du routeur wifi windows" color="#8cb6ce" meeting="false" start="2021-05-04" duration="2" complete="100" thirdDate="2021-04-22" thirdDate-constraint="0" expand="true"/>
         <task id="58" name="Mise en place d'un diagramme de Gantt" color="#8cb6ce" meeting="false" start="2021-05-10" duration="3" complete="100" thirdDate="2021-04-22" thirdDate-constraint="0" expand="true"/>
         <task id="61" name="Modifier le style des commandes pour bien les visualiser" color="#8cb6ce" meeting="false" start="2021-05-14" duration="1" complete="100" thirdDate="2021-05-06" thirdDate-constraint="0" expand="true"/>
-        <task id="64" name="Améliorer le readme pour les nouvelles commandes" color="#8cb6ce" meeting="false" start="2021-05-17" duration="2" complete="50" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
-        <task id="66" name="Préparer des démonstrations pacager" color="#8cb6ce" meeting="false" start="2021-05-19" duration="4" complete="0" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
-        <task id="69" name="Porter le code sous Linux" color="#8cb6ce" meeting="false" start="2021-05-26" duration="2" complete="0" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
+        <task id="64" name="Améliorer le readme pour les nouvelles commandes" color="#8cb6ce" meeting="false" start="2021-05-17" duration="2" complete="100" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
+        <task id="66" name="Préparer des démonstrations pacager" color="#8cb6ce" meeting="false" start="2021-05-19" duration="4" complete="100" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
+        <task id="69" name="Porter le code sous Linux (type ARM)" color="#8cb6ce" meeting="false" start="2021-05-26" duration="2" complete="0" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
         <task id="71" name="Porter le code sous Rasberry pi (3+ ou 4)" color="#8cb6ce" meeting="false" start="2021-05-28" duration="2" complete="0" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
         <task id="73" name="Commencer à trouver des idées ainsi que mettre en place le script" color="#8cb6ce" meeting="false" start="2021-06-01" duration="4" complete="0" thirdDate="2021-05-04" thirdDate-constraint="0" expand="true"/>
         <task id="75" name="Ecriture du rapport de stage (rendu le 27/06/2021)" color="#8cb6ce" meeting="false" start="2021-06-07" duration="10" complete="0" thirdDate="2021-05-17" thirdDate-constraint="0" expand="true"/>
