@@ -1,3 +1,5 @@
+import time
+
 from djitellopy import tello
 import cv2
 from pyzbar.pyzbar import decode
@@ -14,10 +16,16 @@ class StockMaj():
         self.move = [0, 0, 0, 0]
         self.barcodeNone = True
         self.lastCommand = None
+        self.test = 0
+        self.localtime = 0
 
     def detectCode(self):
         det = decode(self.img)
         if not det:
+            self.test = time.localtime().tm_sec - self.localtime
+            if self.test > 5 and self.isStart is True:
+                self.move = [0, 0, 0, 0]
+                self.isFinish = True
             self.barcodeNone = True
         for barcode in det:
             (x, y, w, h) = barcode.rect
@@ -25,6 +33,7 @@ class StockMaj():
             barcodeData = barcode.data.decode("utf-8")
             barcodeType = barcode.type
             tmp = barcodeData.split()
+            self.localtime = time.localtime().tm_sec
             if self.isStart is False and barcodeData == "start" and self.barcodeNone is True:
                 self.isStart = True
                 self.move = [-25, 0, 0, 0]
@@ -61,6 +70,7 @@ class StockMaj():
         if self.tel.get_battery() < 50:
             print("ERROR : Drone doesn't have enough battery")
             self.tel.end()
+        self.localtime = time.localtime().tm_sec
         while not self.isFinish:
             self.img = self.tel.get_frame_read().frame
             self.img = cv2.resize(self.img, (1280, 720))
