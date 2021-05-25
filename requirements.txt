@@ -1,7 +1,7 @@
 certifi==2020.12.5
 chardet==4.0.0
 django-qrcode==0.3
-djitellopy=1.5
+djitellopy==1.5
 djitellopy2==2.3
 docutils==0.17.1
 idna==2.10
