@@ -2,5 +2,5 @@ import qrcode
 
 # permet de créer un qrcode avec un string
 
-img = qrcode.make('stop')
-img.save("stop.png")
+img = qrcode.make('Box n1 15kg computer')
+img.save("Resources/Box1.png")
