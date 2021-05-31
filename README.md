@@ -104,8 +104,44 @@ pip install -r requirement.txt
 ```
 Here is ! You can now check the [usage](https://github.com/despire907/TelloDroneStage#usage) to know the all possibility's of the project.
 #### Linux Installation
-TODO
-
+Most factory versions of Ubuntu 18.04 or Ubuntu 20.04 come with Python pre-installed. Check your version of Python by entering the following:
+```Bash
+python --version
+```
+If the revision level is lower than 3.7.x, or if Python is not installed, continue to the next step.
+##### 1. Update and Refresh Repository Lists.
+Open a terminal window, and enter the following:
+```Bash
+sudo apt update
+```
+##### 2. Install Supporting Software.
+The software-properties-common package gives you better control over your package manager by letting you add PPA (Personal Package Archive) repositories. Install the supporting software with the command:
+```Bash
+sudo apt install software-properties-common
+```
+##### 3. Add Deadsnakes PPA.
+Deadsnakes is a PPA with newer releases than the default Ubuntu repositories. Add the PPA by entering the following:
+```Bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+```
+The system will prompt you to press enter to continue. Do so, and allow it to finish. Refresh the package lists again:
+```Bash
+sudo apt update
+```
+##### 4. Install Python 3.
+Now you can start the installation of Python 3.8 with the command:
+```Bash
+sudo apt install python3.9
+```
+Allow the process to complete and verify the Python version was installed sucessfully:
+```Bash
+python --version
+```
+So now go to the repository folder with a terminal and then use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirement.
+```Bash
+pip install -r requirement.txt
+```
+Here is ! You can now check the [usage](https://github.com/despire907/TelloDroneStage#usage) to know the all possibility's of the project.
 #### Raspberry Installation 
 TODO
 
