@@ -10,7 +10,7 @@ from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
-from djitellopy import tello
+from djitellopy import Tello
 from pyzbar.pyzbar import decode
 import numpy as np
 import math
@@ -64,7 +64,6 @@ def circle(radius: int, direction: str, rotation: str, inclinaison: int, speed: 
 
 # Kivy Camera permet d'afficher la camera ainsi que de gerer les bouttons
 class KivyCamera(Image):
-
     isConnect: bool
 
     def __init__(self, capture, fps, **kwargs):
@@ -91,12 +90,7 @@ class KivyCamera(Image):
         self.add_widget(self.mainButton)
         self.mainButton.bind(on_release=self.dropdown.open)
         self.dropdown.bind(on_select=lambda instance, x: setattr(self.mainbutton, 'text', x))
-        try:
-            self.capture.connect()
-        except Exception as e:
-            if str(e) == "Command 'command' was unsuccessful for 2 tries. Latest response:	'Aborting command " \
-                         "'command'. Did not receive a response after 7 seconds'":
-                self.isConnect = False
+        self.isConnect = self.capture.connect()
         if self.isConnect is True:
             self.capture.streamon()
             self.ids.not_connected.color = (0, 0, 0, 0)
@@ -176,7 +170,7 @@ class KivyCamera(Image):
         image_texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
         self.texture = image_texture
         self.ids.battery_label.text = "Battery: " + str(self.capture.get_battery()) + "%"
-        self.ids.temperature_label.text = "Temperature: " + str(self.capture.get_temperature()) + "°C"
+        self.ids.temperature_label.text = "Temperature: " + str(self.get_temperature()) + "°C"
         self.ids.barometer_label.text = "Altitude: " + str(self.capture.get_height()) + "cm"
         self.ids.time_flight_label.text = "Flight Time: " + str(self.capture.get_flight_time()) + "s"
         if self.dropdown.isFaceTracking is not True or self.dropdown.isQrCodeTracking is not True:
@@ -245,7 +239,8 @@ class KivyCamera(Image):
             elif barcodeData == "Rebound":
                 self.dropdown.isReboundMod = True
             elif tmp[0] == "circle":
-                h = threading.Thread(name='circle', target=circle(int(tmp[1]), tmp[2], tmp[3], int(tmp[4]), 50, self.capture))
+                h = threading.Thread(name='circle',
+                                     target=circle(int(tmp[1]), tmp[2], tmp[3], int(tmp[4]), 50, self.capture))
                 h.start()
             elif barcodeData is not None:
                 h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
@@ -570,5 +565,5 @@ class TelloApp(App):
 
 
 if __name__ == '__main__':
-    tell = tello.Tello(retry_count=1)
+    tell = Tello()
     TelloApp(tell).run()

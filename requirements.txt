@@ -1,14 +1,10 @@
 certifi==2020.12.5
 chardet==4.0.0
-django-qrcode==0.3
+qrcode==6.1
 djitellopy==1.5
-djitellopy2==2.3
 docutils==0.17.1
 idna==2.10
 Kivy==2.0.0
-kivy-deps.angle==0.3.0
-kivy-deps.glew==0.3.0
-kivy-deps.sdl2==0.3.1
 Kivy-Garden==0.1.4
 numpy==1.20.3
 nums-from-string==0.1.2

@@ -1,12 +1,10 @@
 import time
-
-from djitellopy import tello
+from djitellopy import Tello
 import cv2
 from pyzbar.pyzbar import decode
-from time import sleep
 
 
-class StockMaj():
+class StockMaj:
     def __init__(self, me):
         self.tel = me
         self.img = None
@@ -89,7 +87,7 @@ class StockMaj():
 
 
 if __name__ == '__main__':
-    me = tello.Tello()
+    me = Tello()
     me.connect()
     me.streamon()
     StockMaj(me).initProg()
