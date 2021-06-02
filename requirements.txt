@@ -16,3 +16,4 @@ pywin32==300
 pyzbar==0.1.8
 requests==2.25.1
 urllib3==1.26.4
+image==1.5.33
