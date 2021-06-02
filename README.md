@@ -32,7 +32,7 @@
                     <a href="#installation">Installation</a>
                     <ul>
                         <li><a href="#windows-installation">Windows Installation</a></li>
-                        <li><a href="#linux-installation">Linux Installation</a></li>
+                        <li><a href="#linux-and-raspberry-installation">Linux and Raspberry Installation</a></li>
                         <li><a href="#raspberry-installation">Raspberry Installation</a></li>
                     </ul>
                 </li>
@@ -103,7 +103,7 @@ So now go to the repository folder with a terminal and then use the package mana
 pip install -r requirement.txt
 ```
 Here is ! You can now check the [usage](https://github.com/despire907/TelloDroneStage#usage) to know the all possibility's of the project.
-#### Linux Installation
+#### Linux and Raspberry Installation
 Most factory versions of Ubuntu 18.04 or Ubuntu 20.04 come with Python pre-installed. Check your version of Python by entering the following:
 ```Bash
 python --version
@@ -129,7 +129,7 @@ The system will prompt you to press enter to continue. Do so, and allow it to fi
 sudo apt update
 ```
 ##### 4. Install Python 3.
-Now you can start the installation of Python 3.8 with the command:
+Now you can start the installation of Python 3.9 with the command:
 ```Bash
 sudo apt install python3.9
 ```
@@ -142,8 +142,6 @@ So now go to the repository folder with a terminal and then use the package mana
 pip install -r requirement.txt
 ```
 Here is ! You can now check the [usage](https://github.com/despire907/TelloDroneStage#usage) to know the all possibility's of the project.
-#### Raspberry Installation 
-TODO
 
 ## Usage
 
