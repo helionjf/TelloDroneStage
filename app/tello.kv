@@ -71,13 +71,24 @@
     	    on_press: root.land()
     	    background_normal: 'Resources/img/outline_flight_land_black_48dp.png'
     	    background_down: 'Resources/img/outline_flight_land_black_48dp-down.png'
+    	Button:
+    	    pos_hint: {'x': 3.2, 'y': 1.1}
+    	    size_hint: .7, .5
+    	    on_press: root.throwfly()
+    	    text: "Throw Fly"
+    	Button:
+    	    pos_hint: {'x': 4.2, 'y': 1}
+    	    size_hint: .8, .8
+    	    on_press: root.motoron()
+    	    background_normal: 'Resources/img/840168.png'
+    	    background_down: 'Resources/img/840168-down.png'
     	Label:
     	    id: battery_label
     	    text: 'Battery: 0%'
     	    color: 1, 1, 1, 1
     	    background_color: .1, .1, .1, 1
     	    text_size: 400, None
-    	    pos: 165, 530
+    	    pos: 160, 530
     	    canvas.before:
     	        Color:
     	            rgba: self.background_color
