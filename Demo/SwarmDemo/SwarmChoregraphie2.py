@@ -23,7 +23,7 @@ class Choregraphie:
     def runDemo(self):
         self.checkStart()
         self.sendCommandToAllDrone("takeoff")
-        time.sleep(6)
+        time.sleep(7)
         self.sendCommandToIp("left 25", self.ipList[0])
         self.sendCommandToIp("right 25", self.ipList[1])
         time.sleep(5)
