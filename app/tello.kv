@@ -60,13 +60,13 @@
             background_normal: 'Resources/img/icons8-u-turn-to-left-50.png'
             background_down: 'Resources/img/icons8-u-turn-to-left-50-down.png'
     	Button:
-    	    pos_hint: {'x': 3.5, 'y': 0.5}
+    	    pos_hint: {'x': 3.4, 'y': 0.5}
     	    size_hint: .5, .5
     	    on_press: root.takeoff()
     	    background_normal: 'Resources/img/outline_flight_takeoff_black_48dp.png'
     	    background_down: 'Resources/img/outline_flight_takeoff_black_48dp-down.png'
     	Button:
-    	    pos_hint: {'x': 4, 'y': 0.5}
+    	    pos_hint: {'x': 4.1, 'y': 0.5}
     	    size_hint: .5, .5
     	    on_press: root.land()
     	    background_normal: 'Resources/img/outline_flight_land_black_48dp.png'
@@ -77,11 +77,10 @@
     	    on_press: root.throwfly()
     	    text: "Throw Fly"
     	Button:
-    	    pos_hint: {'x': 4.2, 'y': 1}
-    	    size_hint: .8, .8
+    	    pos_hint: {'x': 4.1, 'y': 1.1}
+    	    size_hint: .7, .5
     	    on_press: root.motoron()
-    	    background_normal: 'Resources/img/840168.png'
-    	    background_down: 'Resources/img/840168-down.png'
+    	    text: "Motor"
     	Label:
     	    id: battery_label
     	    text: 'Battery: 0%'
