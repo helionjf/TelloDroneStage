@@ -51,10 +51,10 @@ class StockMaj:
                 self.move = [0, 0, 25, 0]
                 self.barcodeNone = False
             elif barcodeData == "left" and self.barcodeNone is True:
-                self.move = [25, 0, 0, 0]
+                self.move = [20, 0, 0, 0]
                 self.barcodeNone = False
             elif barcodeData == "right" and self.barcodeNone is True:
-                self.move = [-25, 0, 0, 0]
+                self.move = [-20, 0, 0, 0]
                 self.barcodeNone = False
             elif barcodeData == "stop" and self.barcodeNone is True:
                 self.move = [0, 0, 0, 0]
@@ -80,6 +80,7 @@ class StockMaj:
             self.tel.send_rc_control(self.move[0], self.move[1], self.move[2], self.move[3])
             if tmp == 0:
                 self.tel.takeoff()
+                self.tel.move_down(20)
                 tmp = 1
         self.tel.land()
         self.tel.streamoff()
