@@ -17,6 +17,7 @@ import math
 import cv2
 import threading
 import datetime
+import time
 from pathlib import Path, PurePath
 
 
@@ -249,10 +250,25 @@ class KivyCamera(Image):
                                      target=circle(int(tmp[1]), tmp[2], tmp[3], int(tmp[4]), 50, self.capture))
                 h.start()
             elif barcodeData is not None:
-                h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
-                h.start()
+                print("QRcode : ")
+                print(tmp)
+                #transformer la chaine tmp en tableau exemple 'motoron;motoroff' en tabcomtello = ['motoron', 'motoroff']
+                #for comtello in tabcomtello :
+                #print(comtello)
+                #h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(barcodeData))
+                #h.start()
+
+                # Traitement au cas ou plusieurs commandes sur 1 QR Code
+                tabcomtello = barcodeData.split(',')
+                print(tabcomtello)
+                for comtello in tabcomtello:
+                    print(comtello)
+                    h = threading.Thread(name='qrcode', target=self.capture.send_command_with_return(comtello))
+                    h.start()
+                    time.sleep(2)  # Attente d'une demi seconde
             text = "{} ({})".format(barcodeData, barcodeType)
             cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+
 
     def flip(self, direction):
         if self.capture.stream_on is False or self.capture.get_flight_time() == 0 and self.capture.get_height() == 0:
